@@ -1,0 +1,5 @@
+[webservers]
+rhhost2.localnet.com
+
+[dbservers]
+rhhost2.localnet.com

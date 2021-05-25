@@ -1,0 +1,34 @@
+---
+
+# Make sure wheel group is there and has sudo permissions:
+
+- name: Ensure wheel group is present
+  group:
+    name: wheel
+    state: present
+
+- name: Ensure wheel group has sudo privileges
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: "^%wheel"
+    line: "%wheel ALL=(ALL:ALL) ALL"
+    validate: "/usr/sbin/visudo -cf %s"
+
+# Some users configurations:
+
+- name: Copy ssh public keys
+  ansible.posix.authorized_key:
+    user: user2
+    state: present
+    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
+# Set all sudoers to no password
+- name: change sudoers file
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^%sudo'
+    line: '%sudo ALL=(ALL) NOPASSWD: ALL'
+    validate: /usr/sbin/visudo -cf %s
+

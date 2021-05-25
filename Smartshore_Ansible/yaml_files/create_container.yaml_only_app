@@ -1,0 +1,62 @@
+---
+# This playbook is to install docker packages on Centos 8
+
+- name: Create Container
+  gather_facts: yes
+  hosts: all
+  remote_user: docker
+  become: true
+
+  tasks:
+  - name: Clone git repo
+    git:
+      repo: https://github.com/jason-michael/express-mysql-todo.git
+      version: master
+      dest: /home/docker/Smartshore_assignment/express-mysql-todo/
+
+  - name: create a network
+    docker_network: 
+      name: mysql_todo_nw
+
+#  - name: Add Nginx Image to Ansible Hosts
+#    add_host:
+#      name: "todo_mysql_app"
+#      ansible_connection: docker
+#      ansible_ssh_user: root
+
+  - name: Create todoapp base image
+    docker_container:
+      name: todomysqlapp
+      image: node:14
+      networks:
+        - name: mysql_todo_nw
+      links:
+        - name: mysql_db
+      ports:
+        - "3000:3000"
+      tty: true
+      state: started
+      command: tail -f /dev/null
+
+  - name: Add todoapp Image to Ansible Hosts
+    add_host:
+      name: "todomysqlapp"
+      ansible_connection: docker
+      ansible_ssh_user: root
+
+#  - name: Configure todoapp Base Image for deploying Webapp
+#    hosts: "todomysqlapp"
+#    gather_facts: false
+#    tasks:
+
+#    - name: Install Rsync
+#      apt:
+#        name: rsync
+
+#    - name: Copy local configuration Files to Nginx Conf
+#      synchronize:
+#        src: /home/docker/Docker_files/myTODO_app_dockerfile/TODO-Repo/
+#        dest: /mysql-todo/
+
+#    - name: Ensure NGINX Is enabled
+#      raw: npm i && npm run start &

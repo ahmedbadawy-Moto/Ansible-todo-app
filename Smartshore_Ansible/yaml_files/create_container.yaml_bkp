@@ -1,0 +1,43 @@
+---
+# This playbook is to install docker packages on Centos 8
+
+- name: Create Container
+  gather_facts: yes
+  hosts: all
+  remote_user: docker
+  become: false
+
+  tasks:
+  - name: Clone git repo
+    git:
+      repo: https://github.com/jason-michael/express-mysql-todo.git
+      version: master
+      dest: /home/docker/Smartshore_assignment/express-mysql-todo/
+
+#  - name: Pull mysql Docker image
+#    docker_image:
+#      name: mysql:5.7
+
+  - name: create a network
+    docker_network: 
+      name: mysql_todo_nw
+
+  - name: create mysql container and run it
+    docker_container:
+      name: mysql_db
+      image: mysql:5.7
+      volumes:
+        - db_data:/var/lib/mysql
+      networks:
+        - name: mysql_todo_nw
+      env:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: todos_db
+        MYSQL_USER: root
+        MYSQL_PASSWORD: root
+      state: started
+      ports:
+        - "3306:3306"
+      tty: true
+      detach: true
+      

@@ -1,0 +1,10 @@
+---
+# This playbook contains base plays for all nodes
+
+- name: install firewalld
+  yum: name=firewalld state=present
+
+- name: start firewalld service
+  service: name=firewalld state=started enabled=yes
+
+

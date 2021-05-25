@@ -1,0 +1,18 @@
+---
+# This playbook is to harden a linux machine.
+
+- name: Configure a webapp
+  gather_facts: yes
+  hosts: all
+  become: true
+  
+#  tasks:
+#    - name: copy ssh public keys
+#      ansible.posix.authorized_key:
+#        user: user2
+#        state: present
+#        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
+  roles:
+  - base
+

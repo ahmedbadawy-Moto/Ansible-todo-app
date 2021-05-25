@@ -1,0 +1,7 @@
+---
+# This playbook is to apply basic hardening configurations on Linux vm
+
+- name: upgrade all packages
+  yum:
+    name: '*'
+    state:  latest

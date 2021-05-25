@@ -1,0 +1,23 @@
+---
+# This playbook is to install docker packages on Centos 8
+
+- name: Create Container
+  gather_facts: yes
+  hosts: all
+  remote_user: docker
+  become: true
+
+  tasks:
+  - name: Deploy and run todo app container
+    docker_container:
+      name: todoapp
+      image: todomysqlapp
+      networks:
+        - name: mysql_todo_nw
+          links:
+            - mysql_db:latest
+      state: started
+      ports:
+        - "3000:3000"
+      tty: true
+      detach: true
