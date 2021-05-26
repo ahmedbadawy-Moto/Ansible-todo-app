@@ -1,9 +1,7 @@
 FROM node:14
 WORKDIR mysql-todo
-#ADD TODO-Repo ./
 ADD todoapp ./
 COPY connection.js ./app/config/
 ADD app_start.sh /docker-entrypoint-initdb.d/
 RUN npm i
-#CMD npm run start
 EXPOSE 3000:3000

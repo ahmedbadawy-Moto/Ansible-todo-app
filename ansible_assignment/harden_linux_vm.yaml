@@ -6,13 +6,6 @@
   hosts: gcpservers
   become: true
   
-#  tasks:
-#    - name: copy ssh public keys
-#      ansible.posix.authorized_key:
-#        user: user2
-#        state: present
-#        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
-
   roles:
   - base
 

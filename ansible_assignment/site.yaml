@@ -21,4 +21,4 @@
       - dockerappallfiles: "/home/docker/todo_app_cont_files"
       - dockermysqldballfiles: "/home/docker/mysql_db_cont_files"
       - dockernginxallfiles: "/home/docker/nginx_cont_files"
-      - ansiblehomedir: "/home/centos/Smartshore_Ansible"
+      - ansiblehomedir: "/home/centos/ansible_assignment"

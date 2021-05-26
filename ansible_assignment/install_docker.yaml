@@ -3,7 +3,6 @@
 
 - name: Install docker
   gather_facts: No
-#  remote_user: centos
   hosts: gcpservers
   become: true
 
