@@ -1,9 +1,0 @@
----
-# This playbook deploys all site configs to all nodes
-- name: apply base configuration to all nodesss
-  hosts: all
-  remote_user: root
-
-  roles:
-  - base
-

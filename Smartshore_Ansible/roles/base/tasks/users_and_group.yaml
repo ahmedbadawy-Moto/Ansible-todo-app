@@ -19,7 +19,7 @@
 
 - name: Copy ssh public keys
   ansible.posix.authorized_key:
-    user: user2
+    user: centos
     state: present
     key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
 
@@ -31,4 +31,3 @@
     regexp: '^%sudo'
     line: '%sudo ALL=(ALL) NOPASSWD: ALL'
     validate: /usr/sbin/visudo -cf %s
-

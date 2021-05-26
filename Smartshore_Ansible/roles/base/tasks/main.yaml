@@ -1,14 +1,7 @@
 ---
 # This playbook is to apply basic hardening configurations on Linux vm
 
-# Run OS update playboot tasks
-- import_tasks: os-update.yaml
-
-# Run Users and groups playbook tasks
-- import_tasks: users_and_group.yaml
-
-# Run SSH config playbook tasks
-- import_tasks: ssh-config.yaml
-
-# Run iptables.yaml playbook tasks
-- import_tasks: iptables.yaml
+- include: os-update.yaml
+- include: users_and_group.yaml
+- include: ssh-config.yaml
+- include: iptables.yaml

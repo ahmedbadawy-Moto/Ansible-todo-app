@@ -1,0 +1,5 @@
+FROM nginx
+COPY ./default.conf /etc/nginx/conf.d/
+#COPY ./0000_csr-certbot.pem /etc/nginx/ssl/
+#COPY ./0000_key-certbot.pem /etc/nginx/ssl/
+#COPY ./options-ssl-nginx.conf /etc/nginx/

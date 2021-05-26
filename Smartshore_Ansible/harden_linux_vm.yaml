@@ -3,7 +3,7 @@
 
 - name: Configure a webapp
   gather_facts: yes
-  hosts: all
+  hosts: gcpservers
   become: true
   
 #  tasks:

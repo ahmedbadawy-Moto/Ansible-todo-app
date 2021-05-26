@@ -1,0 +1,17 @@
+---
+# This playbook is to harden a linux machine.
+
+- name: Create Container
+#  gather_facts: yes
+  hosts: gcpservers
+  become_user: docker
+  become: true  
+
+  roles:
+  - role: deploy_todo_app_stack
+    vars: 
+      - dockerappallfiles: "/home/docker/todo_app_cont_files"
+      - dockermysqldballfiles: "/home/docker/mysql_db_cont_files"
+      - dockernginxallfiles: "/home/docker/nginx_cont_files"
+      - ansiblehomedir: "/home/centos/Smartshore_Ansible"
+

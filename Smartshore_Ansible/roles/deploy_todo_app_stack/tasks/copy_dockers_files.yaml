@@ -1,0 +1,32 @@
+---
+# Copy all needed files to build and run 3 docker images:
+
+- name: Clone git repo
+  git:
+    repo: https://github.com/jason-michael/express-mysql-todo.git
+    version: master
+    dest: "{{ dockerappallfiles }}/todoapp/"
+
+- name: copy todoapp docker file
+  copy:
+    src: "{{ ansiblehomedir }}/files/todo_app_files/"
+    dest: "{{ dockerappallfiles }}/"
+    owner: docker
+    group: docker
+    mode: 0744
+
+- name: copy mysql docker files
+  copy:
+    src: "{{ ansiblehomedir }}/files/mysql_db_files/"
+    dest: "{{ dockermysqldballfiles }}"
+    owner: docker
+    group: docker
+    mode: 0644
+
+- name: copy nginx docker file
+  copy:
+    src: "{{ ansiblehomedir }}/files/nginx_files/"
+    dest: "{{ dockernginxallfiles }}"
+    owner: docker
+    group: docker
+    mode: 0644

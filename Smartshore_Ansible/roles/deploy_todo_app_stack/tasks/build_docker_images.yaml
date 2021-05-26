@@ -1,0 +1,33 @@
+---
+# This playbook is to build docker images on Centos 8
+
+- name: create a network
+  docker_network: 
+    name: mysql_todo_nw
+
+- name: Build Mysql image from Dockerfile
+  docker_image:
+    name: mysql_db
+    build:
+      pull: yes
+      path: "{{ dockermysqldballfiles }}/"
+    state: present
+    source: build
+
+- name: Build todo app image from Dockerfile
+  docker_image:
+    name: todo-app
+    build:
+      pull: yes
+      path: "{{ dockerappallfiles }}/"
+    state: present
+    source: build
+
+- name: Build nginx image from Dockerfile
+  docker_image: 
+    name: nginx-app
+    build:
+      pull: yes 
+      path: "{{ dockernginxallfiles }}"
+    state: present
+    source: build

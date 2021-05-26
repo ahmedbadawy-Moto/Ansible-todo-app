@@ -3,55 +3,9 @@
 
 - name: Install docker
   gather_facts: No
-  hosts: all
+#  remote_user: centos
+  hosts: gcpservers
   become: true
 
-  tasks:
-  - name: Uninstall Docker packages
-    yum:
-      name:
-        - docker
-        - docker-client
-        - docker-client-latest
-        - docker-common
-        - docker-latest
-        - docker-latest-logrotate
-        - docker-logrotate
-        - docker-engine
-        - podman
-        - buildah
-      state: removed
-
-  - name: Install pre-requisite packages
-    yum:
-      name:
-        - yum-utils
-        - device-mapper-persistent-data
-        - lvm2
-      state: latest
-
-  - name: Add Docker CE repo
-    get_url:
-      url: https://download.docker.com/linux/centos/docker-ce.repo
-      dest: /etc/yum.repos.d/docker-ce.repo
-
-  - name: setup containerd
-    yum: name=containerd.io state=latest
-
-  - name: setup docker-ce
-    yum: name=docker-ce state=latest
-
-  - name: setup docker-ce-cli
-    yum: name=docker-ce-cli state=latest
-  
-  - name: installing docker SDK
-    command: "pip3 install docker"
-
-  - name: Add user centos to docker group
-    user:
-      name: centos
-      groups: docker
-      append: yes
-
-  - name: Start and enable the Docker daemon
-    service: name=docker state=started enabled=yes
+  roles:
+  - install_docker

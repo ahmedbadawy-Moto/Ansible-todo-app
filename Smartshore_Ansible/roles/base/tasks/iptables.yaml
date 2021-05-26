@@ -52,21 +52,21 @@
 
 - name: Firewall rule - allow port 3000/HTTP traffic
   iptables:
-  ¦ chain: INPUT
-  ¦ destination_port: 3000
-  ¦ jump: ACCEPT
-  ¦ protocol: tcp
+    chain: INPUT
+    destination_port: 3000
+    jump: ACCEPT
+    protocol: tcp
 
 - name: Firewall rule - drop any traffic without rule
   iptables:
     chain: INPUT
     jump: DROP
 
-- name: Install `netfilter-persistent` && `iptables-persistent` packages
-  package:
-    name: "{{item}}"
-      state: present
-  with_items:
-    - iptables-persistent
-    - netfilter-persistent
+#  - name: Install `netfilter-persistent` && `iptables-persistent` packages
+#    package:
+#      name: "{{ item }}"
+#        state: present
+#    with_items:
+#      - iptables-persistent
+#      - netfilter-persistent
 

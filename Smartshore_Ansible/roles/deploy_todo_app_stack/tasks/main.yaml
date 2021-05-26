@@ -1,69 +1,8 @@
 ---
 # This playbook is to install docker packages on Centos 8
 
-- name: Create Container
-  gather_facts: yes
-  hosts: all
-  remote_user: docker
-  become: true
-
-  tasks:
-  - name: Clone git repo
-    git:
-      repo: https://github.com/jason-michael/express-mysql-todo.git
-      version: master
-      dest: /home/docker/Smartshore_assignment/express-mysql-todo/
-
-  - name: create a network
-    docker_network: 
-      name: mysql_todo_nw
-
-  - name: Build Mysql image from Dockerfile
-    docker_image:
-       name: mysql_db
-       build:
-         pull: yes
-         path: "/home/docker/Docker_files/mysql_dockerfile/"
-       state: present
-       source: build
-
-#  - name: Add Nginx Image to Ansible Hosts
-#    add_host:
-#      name: "todo_mysql_app"
-#      ansible_connection: docker
-#      ansible_ssh_user: root
-
-  - name: Deploy and run mysql container
-    docker_container:
-      name: mysql_db
-      image: mysql_db
-      networks:
-        - name: mysql_todo_nw
-      state: started
-      ports:
-        - "3306:3306"
-      tty: true
-      detach: true
-
-  - name: Build todo app image from Dockerfile
-    docker_image:
-      name: todomysqlapp
-      build:
-        pull: yes
-        path: "/home/docker/Docker_files/myTODO_app_dockerfile/"
-      state: present
-      source: build
-
-  - name: Deploy and run todo app container
-    docker_container:
-      name: todoapp
-      image: todomysqlapp
-      networks:
-        - name: mysql_todo_nw
-          links:
-            - mysql_db:latest
-      state: started
-      ports:
-        - "3000:3000"
-      tty: true
-      detach: true
+# Define Vars:
+  
+- include: copy_dockers_files.yaml
+- include: build_docker_images.yaml
+- include: deploy_docker_containers.yaml

@@ -1,0 +1,41 @@
+---
+# This playbook is to deploy docker containers on Centos 8
+
+- name: Deploy and run mysql container
+  docker_container:
+    name: mysql_db
+    image: mysql_db
+    networks:
+      - name: mysql_todo_nw
+    state: started
+    ports:
+      - "3306:3306"
+    tty: true
+    detach: true
+
+- name: Deploy and run todo app container
+  docker_container:
+    name: todoapp
+    image: todo-app
+    networks:
+      - name: mysql_todo_nw
+        links:
+          - mysql_db:latest
+    state: started
+    ports:
+      - "3000:3000"
+    tty: true
+    detach: true
+
+- name: Deploy and run nginx container
+  docker_container:
+    name: nginxapp
+    image: nginx-app
+    networks:
+      - name: mysql_todo_nw
+    state: started
+    ports:
+      - "80:80"
+      - "443:443"
+    tty: true
+    detach: true
